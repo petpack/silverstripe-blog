@@ -223,6 +223,18 @@ class BlogEntry extends Page {
 			'Date ASC'
 		);		
 	}
+
+	/**
+	 * Get this blog entries siblings.
+	 * 
+	 * @param int $limit
+	 * @return DataObjectSet
+	 *
+	 * @author Alex Hayes <alex.hayes@dimension27.com>
+	 */
+	public function Siblings($limit = 3) {
+		return $this->Parent()->Entries($limit, null, null, null, '`BlogEntry`.`ID` != ' . $this->ID);
+	}
 }
 
 class BlogEntry_Controller extends Page_Controller {
