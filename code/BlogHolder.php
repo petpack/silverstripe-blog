@@ -104,51 +104,55 @@ class BlogHolder extends BlogTree implements PermissionProvider {
 	/**
 	 * Create default blog setup
 	 */
-	function requireDefaultRecords() {
-		parent::requireDefaultRecords();
-
-		$blogHolder = DataObject::get_one('BlogHolder');
-		//TODO: This does not check for whether this blogholder is an orphan or not
-		if(!$blogHolder) {
-			$blogholder = new BlogHolder();
-			$blogholder->Title = "Blog";
-			$blogholder->URLSegment = "blog";
-			$blogholder->Status = "Published";
-
-			$widgetarea = new WidgetArea();
-			$widgetarea->write();
-
-			$blogholder->SideBarID = $widgetarea->ID;
-			$blogholder->write();
-			$blogholder->publish("Stage", "Live");
-
-			$managementwidget = new BlogManagementWidget();
-			$managementwidget->ParentID = $widgetarea->ID;
-			$managementwidget->write();
-
-			$tagcloudwidget = new TagCloudWidget();
-			$tagcloudwidget->ParentID = $widgetarea->ID;
-			$tagcloudwidget->write();
-
-			$archivewidget = new ArchiveWidget();
-			$archivewidget->ParentID = $widgetarea->ID;
-			$archivewidget->write();
-
-			$widgetarea->write();
-
-			$blog = new BlogEntry();
-			$blog->Title = _t('BlogHolder.SUCTITLE', "SilverStripe blog module successfully installed");
-			$blog->URLSegment = 'sample-blog-entry';
-			$blog->Tags = _t('BlogHolder.SUCTAGS',"silverstripe, blog");
-			$blog->Content = _t('BlogHolder.SUCCONTENT',"<p>Congratulations, the SilverStripe blog module has been successfully installed. This blog entry can be safely deleted. You can configure aspects of your blog (such as the widgets displayed in the sidebar) in <a href=\"admin\">the CMS</a>.</p>");
-			$blog->Status = "Published";
-			$blog->ParentID = $blogholder->ID;
-			$blog->write();
-			$blog->publish("Stage", "Live");
-
-			DB::alteration_message("Blog page created","created");
-		}
-	}
+	
+	// commenting out for rare case when installed on a multisite install
+	// where the blog is not desired on default site
+	
+//	function requireDefaultRecords() {
+//		parent::requireDefaultRecords();
+//
+//		$blogHolder = DataObject::get_one('BlogHolder');
+//		//TODO: This does not check for whether this blogholder is an orphan or not
+//		if(!$blogHolder) {
+//			$blogholder = new BlogHolder();
+//			$blogholder->Title = "Blog";
+//			$blogholder->URLSegment = "blog";
+//			$blogholder->Status = "Published";
+//
+//			$widgetarea = new WidgetArea();
+//			$widgetarea->write();
+//
+//			$blogholder->SideBarID = $widgetarea->ID;
+//			$blogholder->write();
+//			$blogholder->publish("Stage", "Live");
+//
+//			$managementwidget = new BlogManagementWidget();
+//			$managementwidget->ParentID = $widgetarea->ID;
+//			$managementwidget->write();
+//
+//			$tagcloudwidget = new TagCloudWidget();
+//			$tagcloudwidget->ParentID = $widgetarea->ID;
+//			$tagcloudwidget->write();
+//
+//			$archivewidget = new ArchiveWidget();
+//			$archivewidget->ParentID = $widgetarea->ID;
+//			$archivewidget->write();
+//
+//			$widgetarea->write();
+//
+//			$blog = new BlogEntry();
+//			$blog->Title = _t('BlogHolder.SUCTITLE', "SilverStripe blog module successfully installed");
+//			$blog->URLSegment = 'sample-blog-entry';
+//			$blog->Tags = _t('BlogHolder.SUCTAGS',"silverstripe, blog");
+//			$blog->Content = _t('BlogHolder.SUCCONTENT',"<p>Congratulations, the SilverStripe blog module has been successfully installed. This blog entry can be safely deleted. You can configure aspects of your blog (such as the widgets displayed in the sidebar) in <a href=\"admin\">the CMS</a>.</p>");
+//			$blog->Status = "Published";
+//			$blog->ParentID = $blogholder->ID;
+//			$blog->write();
+//			$blog->publish("Stage", "Live");
+//
+//			DB::alteration_message("Blog page created","created");
+//		}
+//	}
 }
 
 class BlogHolder_Controller extends BlogTree_Controller {
