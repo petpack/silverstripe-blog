@@ -38,7 +38,7 @@ class BlogEntry extends Page {
 		
 	/**
 	 * Is WYSIWYG editing allowed?
-	 * @var boolean
+	 * @var SS_Boolean
 	 */
 	static $allow_wysiwyg_editing = true;
 	
@@ -51,7 +51,7 @@ class BlogEntry extends Page {
 		$this->setField('Date', date('Y-m-d H:i:s', strtotime('now')));
 	}
 	
-	function getCMSFields() {
+	function getCMSFields($params = null) {
 		Requirements::javascript('blog/javascript/bbcodehelp.js');
 		Requirements::themedCSS('bbcodehelp');
 		
@@ -59,7 +59,7 @@ class BlogEntry extends Page {
 		$codeparser = new BBCodeParser();
 		
 		SiteTree::disableCMSFieldsExtensions();
-		$fields = parent::getCMSFields();
+		$fields = parent::getCMSFields($params);
 		SiteTree::enableCMSFieldsExtensions();
 		
 		if(!self::$allow_wysiwyg_editing) {
@@ -227,7 +227,7 @@ class BlogEntry extends Page {
 	/**
 	 * Get this blog entries siblings.
 	 * 
-	 * @param int $limit
+	 * @param SS_Int $limit
 	 * @return DataObjectSet
 	 *
 	 * @author Alex Hayes <alex.hayes@dimension27.com>

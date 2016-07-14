@@ -27,11 +27,11 @@ class BlogHolder extends BlogTree implements PermissionProvider {
 		'BlogEntry'
 	);
 
-	function getCMSFields() {
+	function getCMSFields($params = null) {
 		$blogOwners = $this->blogOwners(); 
 
 		SiteTree::disableCMSFieldsExtensions();
-		$fields = parent::getCMSFields();
+		$fields = parent::getCMSFields($params);
 		SiteTree::enableCMSFieldsExtensions();
 
 		if (Permission::check("ADMIN")) {
@@ -97,7 +97,7 @@ class BlogHolder extends BlogTree implements PermissionProvider {
 	/**
 	 * Returns true if the current user is an admin, or is the owner of this blog
 	 *
-	 * @return Boolean
+	 * @return SS_Boolean
 	 */
 	function IsOwner() {
 		return (Permission::check('BLOGMANAGEMENT') || Permission::check('ADMIN'));

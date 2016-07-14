@@ -15,7 +15,7 @@ class TrackBackDecorator extends DataObjectDecorator {
 		);
 	}
 	
-	function updateCMSFields($fields) {
+	function updateCMSFields(FieldSet &$fields) {
 		// Trackback URL field 
 		if($this->owner->TrackBacksEnabled()) {
 			$trackbackURLTable = new ComplexTableField(
@@ -50,7 +50,7 @@ class TrackBackDecorator extends DataObjectDecorator {
 	
 	/**
 	 * Trackback notify the specified trackback url
-	 * @param	boolean | true on success, otherwise false 
+	 * @param	SS_Boolean | true on success, otherwise false 
 	 */
 	function trackbackNotify($url) {
 		$content = new HTMLText('Content'); 

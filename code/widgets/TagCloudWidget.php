@@ -26,8 +26,8 @@ class TagCloudWidget extends Widget {
 
 	static $popularities = array( 'not-popular', 'not-very-popular', 'somewhat-popular', 'popular', 'very-popular', 'ultra-popular' );
 	
-	function getCMSFields() {
-		$fields = parent::getCMSFields(); 
+	function getCMSFields($params = null) {
+		$fields = parent::getCMSFields($params); 
 		
 		$fields->merge(
 			new FieldSet(
@@ -120,7 +120,7 @@ class TagCloudWidget extends Widget {
 	 * Helper method to compare 2 Vars to work out the results.
 	 * @param mixed
 	 * @param mixed
-	 * @return int
+	 * @return SS_Int
 	 */
 	private function column_sort_by_popularity($a, $b){
 		if($a == $b) {

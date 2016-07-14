@@ -39,7 +39,7 @@ class TrackBackURL extends DataObject {
 	 * Check if there is a duplication, based on the associcated blog entry and the url. 
 	 * If onPung is set, it returns true only when the duplicated record that has Pung = true
 	 * @param boolean 
-	 * @return boolean
+	 * @return SS_Boolean
 	 */ 
 	function isDuplicate($onPung = false) {
 		$where = "\"BlogEntryID\" = {$this->BlogEntryID} AND \"URL\" = '{$this->URL}' AND \"TrackBackURL\".\"ID\" <> {$this->ID}"; 
