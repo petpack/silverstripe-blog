@@ -237,14 +237,17 @@ class BlogTree_Controller extends Page_Controller {
 
 		// only use freshness if no action is present (might be displaying tags or rss)
 		if ($this->LandingPageFreshness && !$this->request->param('Action')) {
-			$d = new Zend_Date(SS_Datetime::now()->getValue());
+			$d = new Zend_Date();	//defaults to 'now'
+			
 			$d->sub($this->LandingPageFreshness);
-			$date = $d->toString('YYYY-MM-dd');
+			
+			$date = $d->toString('YYYY-MMM-dd');
 			
 			$filter = "\"BlogEntry\".\"Date\" > '$date'";
 		} else {
 			$filter = '';
 		}
+		
 		// allow filtering by author field and some blogs have an authorID field which
 		// may allow filtering by id
 		if(isset($_GET['author']) && isset($_GET['authorID'])) {
