@@ -231,19 +231,16 @@ class BlogTree_Controller extends Page_Controller {
 	}
 
 	function BlogEntries($limit = null) {
-		require_once('Zend/Date.php');
 		
 		if($limit === null) $limit = BlogTree::$default_entries_limit;
-
+		
 		// only use freshness if no action is present (might be displaying tags or rss)
 		if ($this->LandingPageFreshness && !$this->request->param('Action')) {
-			$d = new Zend_Date();	//defaults to 'now'
 			
-			$d->sub($this->LandingPageFreshness);
+			//DM: let the database do the date calculation:
+			$filter = '"BlogEntry"."Date" > DATE_SUB(CURDATE(),INTERVAL ' . 
+						$this->LandingPageFreshness . ')';
 			
-			$date = $d->toString('YYYY-MMM-dd');
-			
-			$filter = "\"BlogEntry\".\"Date\" > '$date'";
 		} else {
 			$filter = '';
 		}
